@@ -9,4 +9,4 @@ jobs:
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Jest run
-        run: ng test
+        run: npm test
