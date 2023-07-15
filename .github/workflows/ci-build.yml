@@ -3,10 +3,17 @@ on: [push]
 jobs:
   run-tests:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
       - name: Jest run
-        run: npm test
+        run: npm run test
