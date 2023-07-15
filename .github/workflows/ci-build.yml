@@ -16,7 +16,6 @@ jobs:
         with:
           build: npm run build
           start: npm start
-          wait-on: "http://localhost:4200"
       - name: Jest run
         uses: actions/setup-node@v3
         with:
