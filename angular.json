@@ -92,8 +92,44 @@
             ],
             "scripts": []
           }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "worksite-ui:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "worksite-ui:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "worksite-ui:serve",
+            "watch": false,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "worksite-ui:serve:production"
+            }
+          }
         }
       }
     }
+  },
+  "cli": {
+    "schematicCollections": [
+      "@schematics/angular"
+    ]
   }
 }
