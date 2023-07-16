@@ -1,0 +1,9 @@
+<p>employees works!</p>
+<mat-list>
+  <mat-list-item
+    data-test="employee-list-item"
+    *ngFor="let employee of employees"
+  >
+    {{ employee.firstName }} {{ employee.lastName }}
+  </mat-list-item>
+</mat-list>

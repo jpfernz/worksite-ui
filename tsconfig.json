@@ -25,6 +25,10 @@
     ],
     "esModuleInterop": true
   },
+  "exclude": [
+    "node_modules",
+    "./cypress.config.ts"
+  ],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
