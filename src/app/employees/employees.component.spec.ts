@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EmployeesComponent } from './employees.component';
-import { MaterialModule } from '../shared/material.module';
 import { EmployeeService } from './employee.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { spyOn } from 'jest-mock';
@@ -13,9 +12,8 @@ describe('EmployeesComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [EmployeesComponent],
-      imports: [MaterialModule, HttpClientTestingModule]
-    });
+    imports: [HttpClientTestingModule, EmployeesComponent]
+});
     fixture = TestBed.createComponent(EmployeesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

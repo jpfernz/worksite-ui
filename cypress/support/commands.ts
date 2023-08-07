@@ -4,8 +4,9 @@
 // IDE or Text Editor.
 // ***********************************************
 declare namespace Cypress {
-  interface Chainable<Subject = any> {
+  interface Chainable<Subject> {
     navigateToEmployees(): typeof navigateToEmployees;
+    mockBackgroundApis(): void;
   }
 }
 
@@ -35,7 +36,10 @@ const navigateToEmployees = () => {
 // Cypress.Commands.add("login", (email, password) => { ... })
 
 Cypress.Commands.add('navigateToEmployees', navigateToEmployees);
-//
+
+Cypress.Commands.add('mockBackgroundApis', () => {
+  cy.intercept('GET','**/api/v1/employees', { fixture: 'employees.json'}).as('getEmployees');
+})
 //
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
