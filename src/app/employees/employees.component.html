@@ -1,5 +1,5 @@
 <p>employees works!</p>
-<mat-list>
+<mat-list *ngIf="employees$ | async as employees">
   <mat-list-item
     data-test="employee-list-item"
     *ngFor="let employee of employees"
