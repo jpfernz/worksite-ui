@@ -1,6 +1,6 @@
 import { getEmployeeList } from "../support/employees-po";
 
-describe('Employees', () => {
+context('Employees', () => {
   beforeEach(() => {
     cy.mockBackgroundApis();
   });
