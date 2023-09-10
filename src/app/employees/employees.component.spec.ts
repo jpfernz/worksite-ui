@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EmployeesComponent } from './employees.component';
-import { EmployeeService } from './employee.service';
+import { EmployeeService } from './employees.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { spyOn } from 'jest-mock';
 
@@ -12,8 +12,8 @@ describe('EmployeesComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [HttpClientTestingModule, EmployeesComponent]
-});
+      imports: [HttpClientTestingModule, EmployeesComponent],
+    });
     fixture = TestBed.createComponent(EmployeesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -29,5 +29,4 @@ describe('EmployeesComponent', () => {
     component.ngOnInit();
     expect(dataService.getEmployees).toHaveBeenCalled();
   });
-
 });
