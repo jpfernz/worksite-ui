@@ -1,0 +1,45 @@
+<h2 data-test="employee-dialog" mat-dialog-title>{{ data.title }}</h2>
+
+<form [formGroup]="employeeForm" (submit)="onSubmit()">
+  <div class="form-container">
+    <mat-form-field>
+      <mat-label>First Name</mat-label>
+      <input data-test="emp-firstName" matInput formControlName="firstName" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Last Name</mat-label>
+      <input data-test="emp-lastName" matInput formControlName="lastName" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Contact Number</mat-label>
+      <input
+        data-test="emp-contactNum"
+        matInput
+        formControlName="contactNumber"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Project</mat-label>
+      <input data-test="emp-project" matInput formControlName="project" />
+    </mat-form-field>
+
+    <div class="bottom-button-row">
+      <button
+        data-test="emp-submitForm"
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >
+        Submit
+      </button>
+      <button
+        data-test="emp-cancelForm"
+        mat-raised-button
+        color="secondary"
+        (click)="onCancel()"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</form>

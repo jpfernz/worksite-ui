@@ -41,3 +41,5 @@ cypress/videos
 # System files
 .DS_Store
 Thumbs.db
+cypress/screenshots
+.gitignore

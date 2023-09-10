@@ -1,9 +1,20 @@
-<p>employees works!</p>
-<mat-list *ngIf="employees$ | async as employees">
-  <mat-list-item
-    data-test="employee-list-item"
-    *ngFor="let employee of employees"
+<div class="top-button-row">
+  <button
+    data-test="new-employee-button"
+    mat-raised-button
+    color="primary"
+    (click)="onAddNew()"
   >
-    {{ employee.firstName }} {{ employee.lastName }}
-  </mat-list-item>
-</mat-list>
+    New
+  </button>
+</div>
+<div>
+  <mat-list *ngIf="employees$ | async as employees">
+    <mat-list-item
+      data-test="employee-list-item"
+      *ngFor="let employee of employees"
+    >
+      {{ employee.firstName }} {{ employee.lastName }}
+    </mat-list-item>
+  </mat-list>
+</div>
