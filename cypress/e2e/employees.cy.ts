@@ -2,7 +2,7 @@ import { getEmployeeForm, getEmployeeButton, getEmployeeList, empFirstNameInput,
 
 context('Employees Page', () => {
   beforeEach(() => {
-    cy.mockBackgroundApis();
+    cy.interceptEmployeeRequests();
   });
 
   describe('Scenario: Loading the employees page', () => {
@@ -56,8 +56,8 @@ context('Employees Page', () => {
     });
 
     specify('WHEN: I provide employee details in the form', () => {
-      empFirstNameInput().type('John').should('have.value', 'John');
-      empLastNameInput().type('Doe').should('have.value', 'Doe');
+      empFirstNameInput().type('John', {force: true}).should('have.value', 'John');
+      empLastNameInput().type('Doe', {force: true}).should('have.value', 'Doe');
       empContactNumInput().type('222-345-6789', {force: true}).should('have.value', '222-345-6789');
       empProjectInput().type('Housing Project', {force: true}).should('have.value', 'Housing Project');
     });
