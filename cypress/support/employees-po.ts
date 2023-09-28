@@ -8,3 +8,15 @@ export const empProjectInput = () => cy.get('[data-test=emp-project]');
 export const empSubmitButton = () => cy.get('[data-test=emp-submitForm]');
 export const getConfMessage = () => cy.get('[data-test=conf-message]');
 export const getEmpCancelButton = () => cy.get('[data-test=emp-cancelForm]');
+
+export class EmployeePage {
+  public static goToPage() {
+    cy.visit('/employees');
+    cy.wait('@getEmployees');
+    getEmployeeList().should('have.length', 5);
+  }
+
+  public static getEmployees() {
+
+  }
+}
