@@ -29,6 +29,7 @@
         mat-raised-button
         color="primary"
         type="submit"
+        [disabled]="!!employeeForm.invalid"
       >
         Submit
       </button>

@@ -6,7 +6,7 @@
 declare namespace Cypress {
   interface Chainable<Subject> {
     navigateToEmployees(): typeof navigateToEmployees;
-    mockBackgroundApis(): void;
+    interceptEmployeeRequests(): void;
   }
 }
 
@@ -37,9 +37,16 @@ const navigateToEmployees = () => {
 
 Cypress.Commands.add('navigateToEmployees', navigateToEmployees);
 
-Cypress.Commands.add('mockBackgroundApis', () => {
+Cypress.Commands.add('interceptEmployeeRequests', () => {
   cy.intercept('GET','**/api/v1/employees', { fixture: 'employees.json'}).as('getEmployees');
-})
+
+  cy.intercept('POST', '**/api/v1/employees', {
+    statusCode: 201,
+    body: {
+      message: 'New employee added'
+    },
+  }).as('addEmployee');
+});
 //
 // -- This is a child command --
 // Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })

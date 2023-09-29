@@ -1,9 +1,9 @@
-import { Component, Inject, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from "@angular/material/dialog";
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { DialogData } from '../dialog-interface';
 import { MatButtonModule } from '@angular/material/button';
@@ -35,10 +35,10 @@ import { AlertsBarComponent } from '../../common/alerts-bar/alerts-bar.component
 })
 export class EmployeeDialogComponent {
   employeeForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    contactNumber: new FormControl(''),
-    project: new FormControl('')
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    contactNumber: new FormControl('', Validators.required),
+    project: new FormControl('', Validators.required)
   });
 
   public dialogRef = inject(MatDialogRef<EmployeeDialogComponent>);
@@ -54,22 +54,21 @@ export class EmployeeDialogComponent {
       project: this.employeeForm.value.project ?? ''
     };
 
-    console.log(newEmployee);
-    // console.log(this.employeeForm.value);
-
-    this.employeeService.addEmployee(newEmployee)
+    if (this.employeeForm.valid) {
+      this.employeeService.addEmployee(newEmployee)
       .subscribe(resp => {
         console.log(resp.message);
-        this.openAlertMsg(resp.message);
+        this.openAlertMsg(resp.message, 'Close');
       });
+    }
+
     this.dialogRef.close();
   }
 
   openAlertMsg(message:string, action?: string) {
     this._snackBar.openFromComponent(AlertsBarComponent, {
-      data: message,
+      data: {message: message, action: action},
       duration: 5000,
-
     });
   }
 
