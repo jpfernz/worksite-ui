@@ -10,7 +10,7 @@ context('Employees Page', () => {
       EmployeePage.goToPage();
     });
 
-    specify.skip('THEN: I should see a list of employees', () =>{
+    specify('THEN: I should see a list of employees', () =>{
       getEmployeeList().should('have.length', 5);
     });
   });
