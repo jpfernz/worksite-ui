@@ -43,3 +43,4 @@ cypress/videos
 Thumbs.db
 cypress/screenshots
 .gitignore
+.vscode/settings.json
