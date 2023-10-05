@@ -1,0 +1,26 @@
+// @import 'ag-grid-community/styles/ag-grid.css';
+
+.button-row {
+  padding: 0px 24px 0px 24px;
+  border-style: solid;
+  border-left: none;
+  border-right: none;
+  border-width: 1px;
+  background-color: white;
+  border-color: white;
+  display: flex;
+  justify-content: right;
+}
+
+ag-grid-angular {
+  width: auto;
+  height: 100%;
+}
+
+mat-sidenav-container {
+  padding: 0px 24px 0px 24px;
+  height: 60%;
+  width: auto;
+}
+
+

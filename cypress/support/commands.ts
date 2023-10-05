@@ -5,14 +5,10 @@
 // ***********************************************
 declare namespace Cypress {
   interface Chainable<Subject> {
-    navigateToEmployees(): typeof navigateToEmployees;
     interceptEmployeeRequests(): void;
   }
 }
 
-const navigateToEmployees = () => {
-  cy.visit('/employees');
-};
 //
 // function customCommand(param: any): void {
 //   console.warn(param);
@@ -34,8 +30,6 @@ const navigateToEmployees = () => {
 //
 // -- This is a parent command --
 // Cypress.Commands.add("login", (email, password) => { ... })
-
-Cypress.Commands.add('navigateToEmployees', navigateToEmployees);
 
 Cypress.Commands.add('interceptEmployeeRequests', () => {
   cy.intercept('GET','**/api/v1/employees', { fixture: 'employees.json'}).as('getEmployees');
