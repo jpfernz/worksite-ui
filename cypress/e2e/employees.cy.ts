@@ -1,4 +1,4 @@
-import { getEmployeeForm, getEmployeeButton, getEmployeeList, empFirstNameInput, empLastNameInput, empContactNumInput, empProjectInput, empSubmitButton, getConfMessage, getEmpCancelButton, EmployeePage } from "../support/employees-po";
+import { getEmployeeForm, empFirstNameInput, empLastNameInput, empContactNumInput, empProjectInput, empSubmitButton, getConfMessage, getEmpCancelButton, EmployeePage, getEmployeesListGrid, employeesGridData, getNewEmployeeButton } from "../support/employees-po";
 
 context('Employees Page', () => {
   beforeEach(() => {
@@ -7,21 +7,24 @@ context('Employees Page', () => {
 
   describe('Scenario: Loading the employees page', () => {
     specify('WHEN: I navigate to the Employees page', () => {
-      EmployeePage.goToPage();
+      EmployeePage.goToEmployeesPage();
     });
 
-    specify('THEN: I should see a list of employees', () =>{
-      getEmployeeList().should('have.length', 5);
+    specify('THEN: I should see a grid of employees', () =>{
+      getEmployeesListGrid()
+        .then((actualGridData) => {
+          cy.agGridValidateRowsExactOrder(actualGridData, employeesGridData)
+        });
     });
   });
 
   describe('Scenario: Launch New Employee Dialog Form', () => {
     specify('GIVEN: I am on the Employees page', () => {
-      EmployeePage.goToPage();
+      EmployeePage.goToEmployeesPage();
     });
 
     specify('WHEN: I click on New button', () => {
-      getEmployeeButton().click();
+      getNewEmployeeButton().click();
     });
 
     specify('THEN: New Employee Dialog Form is displayed', () => {
@@ -31,11 +34,11 @@ context('Employees Page', () => {
 
   describe('Scenario: Cancel Add Employee', () => {
     specify('GIVEN: I am on the Employees page', () => {
-      cy.navigateToEmployees();
+      EmployeePage.goToEmployeesPage();
     });
 
     specify('AND: I click on the New Button', () => {
-      getEmployeeButton().click();
+      getNewEmployeeButton().click();
     });
 
     specify('WHEN: I click on the Cancel Button', () => {
@@ -49,8 +52,8 @@ context('Employees Page', () => {
 
   describe('Scenario: Submit employee form', () => {
     specify('GIVEN: Add New Employee dialog is launched', () => {
-      cy.navigateToEmployees();
-      getEmployeeButton().click();
+      EmployeePage.goToEmployeesPage();
+      getNewEmployeeButton().click();
     });
 
     specify('WHEN: I provide employee details in the form', () => {
