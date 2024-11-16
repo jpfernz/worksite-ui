@@ -2,7 +2,10 @@
   "name": "@worksite-ui/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "nx run worksite-ui:serve --configuration=development",
+    "e2e:open": "nx run worksite-ui-e2e:open-cypress"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~18.2.0",

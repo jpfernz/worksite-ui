@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { Project } from './models/project';
 import { of } from 'rxjs';
+import { DataService } from './services/data.service';
 
 @Component({
   selector: 'app-projects',
@@ -14,40 +15,53 @@ export class ProjectsComponent {
   dummyProjects: Project[] = [
     {
       id: 'prj1',
-      name: 'Project 1',
+      title: 'Project 1',
       description: 'Description 1',
       projectManager: 'Manager 1',
       status: 'Active',
+      startDate: '',
+      endDate: '',
     },
     {
       id: 'prj2',
-      name: 'Project 2',
+      title: 'Project 2',
       description: 'Description 2',
       projectManager: 'Manager 2',
       status: 'Active',
+      startDate: '',
+      endDate: '',
     },
     {
       id: 'prj3',
-      name: 'Project 3',
+      title: 'Project 3',
       description: 'Description 3',
       projectManager: 'Manager 3',
       status: 'Active',
+      startDate: '',
+      endDate: '',
     },
     {
       id: 'prj4',
-      name: 'Project 4',
+      title: 'Project 4',
       description: 'Description 4',
       projectManager: 'Manager 4',
       status: 'Active',
+      startDate: '',
+      endDate: '',
     },
     {
       id: 'prj5',
-      name: 'Project 5',
+      title: 'Project 5',
       description: 'Description 5',
       projectManager: 'Manager 5',
       status: 'Active',
+      startDate: '',
+      endDate: '',
     },
   ];
 
-  projects$ = of(this.dummyProjects);
+  private dataService = inject(DataService);
+
+  // projects$ = of(this.dummyProjects);
+  projects$ = this.dataService.getProjects();
 }

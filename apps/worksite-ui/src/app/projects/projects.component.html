@@ -1,4 +1,4 @@
 <p>projects works!</p>
 @for(project of projects$ | async; track project.id) {
-<p>{{ project.name }}</p>
+<p>{{ project.title }}</p>
 }
