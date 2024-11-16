@@ -7,9 +7,13 @@ import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
-import { provideStore } from '@ngrx/store';
+import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import {
+  projectsFeatureKey,
+  projectsReducer,
+} from './projects/state/projects.reducers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideAnimationsAsync(),
     provideStore(),
+    provideState(projectsFeatureKey, projectsReducer),
     provideEffects(),
     provideStoreDevtools({
       maxAge: 25,

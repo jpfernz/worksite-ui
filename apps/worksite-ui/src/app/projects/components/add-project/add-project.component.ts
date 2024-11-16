@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { DataService } from '../../services/data.service';
+import { ProjectsService } from '../../services/projects.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -23,7 +23,7 @@ export class AddProjectComponent implements OnInit {
   projectForm!: FormGroup;
 
   private fb = inject(FormBuilder);
-  private dataService = inject(DataService);
+  private dataService = inject(ProjectsService);
 
   ngOnInit() {
     this.projectForm = this.fb.group({

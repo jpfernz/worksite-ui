@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { Project } from './models/project';
+import { IProject } from './models/iproject.interface';
 import { of } from 'rxjs';
-import { DataService } from './services/data.service';
+import { ProjectsService } from './services/projects.service';
 
 @Component({
   selector: 'app-projects',
@@ -12,7 +12,7 @@ import { DataService } from './services/data.service';
   styleUrl: './projects.component.scss',
 })
 export class ProjectsComponent {
-  dummyProjects: Project[] = [
+  dummyProjects: IProject[] = [
     {
       id: 'prj1',
       title: 'Project 1',
@@ -60,7 +60,7 @@ export class ProjectsComponent {
     },
   ];
 
-  private dataService = inject(DataService);
+  private dataService = inject(ProjectsService);
 
   // projects$ = of(this.dummyProjects);
   projects$ = this.dataService.getProjects();
