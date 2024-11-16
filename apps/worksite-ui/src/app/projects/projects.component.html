@@ -2,3 +2,4 @@
 @for(project of projects$ | async; track project.id) {
 <p>{{ project.title }}</p>
 }
+<button mat-flat-button (click)="onAddProject()">Add New</button>

@@ -14,6 +14,7 @@ import {
   projectsFeatureKey,
   projectsReducer,
 } from './projects/state/projects.reducers';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(),
     provideAnimationsAsync(),
+    provideNativeDateAdapter(),
     provideStore(),
     provideState(projectsFeatureKey, projectsReducer),
     provideEffects(),

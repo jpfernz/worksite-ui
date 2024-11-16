@@ -1,67 +1,29 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { IProject } from './models/iproject.interface';
-import { of } from 'rxjs';
+// import { of } from 'rxjs';
 import { ProjectsService } from './services/projects.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { AddProjectComponent } from './components/add-project/add-project.component';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, MatButtonModule],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })
 export class ProjectsComponent {
-  dummyProjects: IProject[] = [
-    {
-      id: 'prj1',
-      title: 'Project 1',
-      description: 'Description 1',
-      projectManager: 'Manager 1',
-      status: 'Active',
-      startDate: '',
-      endDate: '',
-    },
-    {
-      id: 'prj2',
-      title: 'Project 2',
-      description: 'Description 2',
-      projectManager: 'Manager 2',
-      status: 'Active',
-      startDate: '',
-      endDate: '',
-    },
-    {
-      id: 'prj3',
-      title: 'Project 3',
-      description: 'Description 3',
-      projectManager: 'Manager 3',
-      status: 'Active',
-      startDate: '',
-      endDate: '',
-    },
-    {
-      id: 'prj4',
-      title: 'Project 4',
-      description: 'Description 4',
-      projectManager: 'Manager 4',
-      status: 'Active',
-      startDate: '',
-      endDate: '',
-    },
-    {
-      id: 'prj5',
-      title: 'Project 5',
-      description: 'Description 5',
-      projectManager: 'Manager 5',
-      status: 'Active',
-      startDate: '',
-      endDate: '',
-    },
-  ];
+  private readonly dialog = inject(MatDialog);
 
   private dataService = inject(ProjectsService);
 
   // projects$ = of(this.dummyProjects);
   projects$ = this.dataService.getProjects();
+
+  onAddProject() {
+    this.dialog.open(AddProjectComponent);
+    console.log('Add Project');
+  }
 }

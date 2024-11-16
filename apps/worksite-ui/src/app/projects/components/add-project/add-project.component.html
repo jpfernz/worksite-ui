@@ -1,7 +1,7 @@
 <mat-card class="project-dialog">
   <mat-card-header>
     <mat-card-title>
-      <h1>Add Project</h1>
+      <h3>Add Project</h3>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
@@ -24,11 +24,51 @@
         />
       </mat-form-field>
       <mat-form-field>
-        <input matInput placeholder="Status" formControlName="status" />
+        <mat-label>Start Date</mat-label>
+        <input
+          matInput
+          [matDatepickerFilter]="dateFilter"
+          [matDatepicker]="startDatePicker"
+          formControlName="startDate"
+        />
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="startDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
       </mat-form-field>
-      <button mat-raised-button color="primary" (click)="addProject()">
-        Submit
-      </button>
+      <mat-form-field>
+        <mat-label>End Date</mat-label>
+        <input
+          matInput
+          [matDatepickerFilter]="dateFilter"
+          [matDatepicker]="endDatePicker"
+          formControlName="endDate"
+        />
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="endDatePicker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          @for (status of projectStatuses; track status) {
+          <mat-option [value]="status.key">{{ status.value }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <div class="button-row">
+        <button mat-flat-button color="primary" (click)="onSubmit()">
+          Submit
+        </button>
+        <button mat-flat-button color="secondary" (click)="onCancel()">
+          Cancel
+        </button>
+      </div>
     </form>
   </mat-card-content>
 </mat-card>

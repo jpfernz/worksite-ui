@@ -1,0 +1,31 @@
+:host {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.project-dialog {
+  min-width: 400px;
+  max-width: 600px;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    button {
+      align-self: flex-end;
+      margin-top: 16px;
+    }
+  }
+}
