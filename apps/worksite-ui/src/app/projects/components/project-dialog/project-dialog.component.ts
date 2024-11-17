@@ -15,7 +15,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProjectStatus } from '../../models/iproject.interface';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -26,10 +26,15 @@ import {
 } from '@angular/material/core';
 import { Store } from '@ngrx/store';
 import { ProjectsActions } from '../../state/projects.actions';
+import { Dialog } from '@angular/cdk/dialog';
 
 interface StatusOption {
   key: ProjectStatus;
   value: string;
+}
+
+interface DialogData {
+  title: string;
 }
 
 export const MY_DATE_FORMATS = {
@@ -62,12 +67,13 @@ export const MY_DATE_FORMATS = {
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
   ],
-  templateUrl: './add-project.component.html',
-  styleUrl: './add-project.component.scss',
+  templateUrl: './project-dialog.component.html',
+  styleUrl: './project-dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddProjectComponent implements OnInit {
-  public dialogRef = inject(MatDialogRef<AddProjectComponent>);
+export class ProjectDialogComponent implements OnInit {
+  public dialogRef = inject(MatDialogRef<ProjectDialogComponent>);
+  public data: DialogData = inject(MAT_DIALOG_DATA);
   private store = inject(Store);
   projectForm!: FormGroup;
 

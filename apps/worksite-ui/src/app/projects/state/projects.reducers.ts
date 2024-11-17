@@ -47,6 +47,10 @@ const projectsFeature = createFeature({
       ...state,
       isLoading: false,
       error,
+    })),
+    on(ProjectsActions.selectProject, (state, { id }) => ({
+      ...state,
+      currentProject: state.projects.find((p) => p.id === id) || null,
     }))
   ),
 });

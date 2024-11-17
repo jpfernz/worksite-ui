@@ -3,9 +3,14 @@ import { AsyncPipe, DatePipe } from '@angular/common';
 import { IProject, ProjectStatus } from './models/iproject.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { AddProjectComponent } from './components/add-project/add-project.component';
+import { ProjectDialogComponent } from './components/project-dialog/project-dialog.component';
 
-import { ColDef, ValueGetterParams } from 'ag-grid-community';
+import {
+  ColDef,
+  RowSelectionOptions,
+  ValueGetterParams,
+  RowNodeSelectedEvent,
+} from 'ag-grid-community';
 import { Store } from '@ngrx/store';
 import { ProjectsActions } from './state/projects.actions';
 import { Observable } from 'rxjs';
@@ -24,6 +29,13 @@ export class ProjectsComponent {
   private store = inject(Store);
 
   projectsList$!: Observable<IProject[]>;
+  isProjectSelected = false;
+
+  rowSelection: RowSelectionOptions = {
+    mode: 'singleRow',
+    checkboxes: true,
+    enableClickSelection: true,
+  };
 
   columnDefs: ColDef<IProject>[] = [
     { field: 'title', headerName: 'Title' },
@@ -59,13 +71,34 @@ export class ProjectsComponent {
     },
   ];
 
+  defaultColDef: ColDef = {
+    flex: 1,
+  };
+
   onGridReady(params: any) {
     this.store.dispatch(ProjectsActions.loadProjects());
     this.projectsList$ = this.store.select(selectProjects);
   }
 
+  onRowSelected(event: RowNodeSelectedEvent<IProject>) {
+    const project_id = event.node.data?.id;
+    if (project_id) {
+      this.store.dispatch(ProjectsActions.selectProject({ id: project_id }));
+      this.isProjectSelected = true;
+    }
+  }
+
   onAddProject() {
-    this.dialog.open(AddProjectComponent);
+    this.dialog.open(ProjectDialogComponent, {
+      data: { title: 'Add Project' },
+    });
     console.log('Add Project');
+  }
+
+  onUpdateProject() {
+    this.dialog.open(ProjectDialogComponent, {
+      data: { title: 'Update Project' },
+    });
+    console.log('Update Project');
   }
 }

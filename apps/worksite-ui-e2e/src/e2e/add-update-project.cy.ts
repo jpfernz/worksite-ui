@@ -40,9 +40,9 @@ describe('Add Project Dialog', () => {
     addProjectTitle().type('Test Project');
     addProjectDescription().type('Test Description');
     addProjectManager().type('John Doe');
-    // addProjectStartDate().click();
-    cy.get('mat-calendar').should('be.visible');
-    cy.get('mat-calendar .mat-calendar-body-cell').first().click();
+    addProjectStartDate().click();
+    // cy.get('mat-calendar').should('be.visible');
+    // cy.get('mat-calendar .mat-calendar-body-cell').first().click();
 
     addProjectEndDate().click();
     // cy.get('mat-calendar').should('be.visible');

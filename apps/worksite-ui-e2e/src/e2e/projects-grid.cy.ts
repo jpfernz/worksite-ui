@@ -77,4 +77,16 @@ describe('Projects Grid', () => {
     cy.wait('@slowProjects');
     cy.get('.ag-overlay-loading-center').should('not.exist');
   });
+
+  it('should load Project Update Dialog on row click', () => {
+    // cy.intercept('GET', '**/api/projects/1', {
+    //   statusCode: 200,
+    //   fixture: 'project-1.json',
+    // }).as('getProject1');
+
+    cy.get('.ag-row').first().click();
+
+    // cy.wait('@getProjects');
+    cy.get('[data-test=update-project-dialog]').should('be.visible');
+  });
 });

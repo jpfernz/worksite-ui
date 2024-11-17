@@ -6,6 +6,9 @@
     class="ag-theme-quartz"
     [rowData]="projectsList$ | async"
     [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [rowSelection]="rowSelection"
+    (rowSelected)="onRowSelected($event)"
     (gridReady)="onGridReady($event)"
   ></ag-grid-angular>
   <div class="project-actions">
@@ -15,6 +18,14 @@
       (click)="onAddProject()"
     >
       Add New
+    </button>
+    <button
+      data-test="update-project-button"
+      mat-flat-button
+      [disabled]="!isProjectSelected"
+      (click)="onUpdateProject()"
+    >
+      Update
     </button>
   </div>
 </div>

@@ -7,6 +7,7 @@ export const ProjectsActions = createActionGroup({
     'Load Projects': emptyProps(),
     'Load Projects Success': props<{ projects: IProject[] }>(),
     'Load Projects Failure': props<{ error: string }>(),
+    'Select Project': props<{ id: string }>(),
     'Add Project': props<{ project: IProject }>(),
     'Add Project Success': props<{ project: IProject }>(),
     'Add Project Failure': props<{ error: string }>(),

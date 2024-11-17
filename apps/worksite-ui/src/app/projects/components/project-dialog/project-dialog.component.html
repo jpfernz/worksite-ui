@@ -1,14 +1,14 @@
 <mat-card class="project-dialog" data-test="add-project-dialog">
   <mat-card-header>
     <mat-card-title>
-      <h3>Add Project</h3>
+      <h3>{{ data.title }}</h3>
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="projectForm">
       <mat-form-field>
         <input
-          data-test="new-title"
+          data-test="prj-dlg-title"
           matInput
           placeholder="Title"
           formControlName="title"
@@ -16,7 +16,7 @@
       </mat-form-field>
       <mat-form-field>
         <input
-          data-test="new-description"
+          data-test="prj-dlg-description"
           matInput
           placeholder="Description"
           formControlName="description"
@@ -24,7 +24,7 @@
       </mat-form-field>
       <mat-form-field>
         <input
-          data-test="new-project-manager"
+          data-test="prj-dlg-project-manager"
           matInput
           placeholder="Project Manager"
           formControlName="projectManager"
@@ -33,7 +33,7 @@
       <mat-form-field>
         <mat-label>Start Date</mat-label>
         <input
-          data-test="new-start-date"
+          data-test="prj-dlg-start-date"
           matInput
           [matDatepickerFilter]="dateFilter"
           [matDatepicker]="startDatePicker"
@@ -49,7 +49,7 @@
       <mat-form-field>
         <mat-label>End Date</mat-label>
         <input
-          data-test="new-end-date"
+          data-test="prj-dlg-end-date"
           matInput
           [matDatepickerFilter]="dateFilter"
           [matDatepicker]="endDatePicker"
@@ -64,7 +64,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Status</mat-label>
-        <mat-select formControlName="status" data-test="new-status">
+        <mat-select formControlName="status" data-test="prj-dlg-status">
           @for (status of projectStatuses; track status) {
           <mat-option [value]="status.key">{{ status.value }}</mat-option>
           }
@@ -72,7 +72,7 @@
       </mat-form-field>
       <div class="button-row">
         <button
-          data-test="add-submit-button"
+          data-test="prj-dlg-submit-button"
           mat-flat-button
           color="primary"
           (click)="onSubmit()"
@@ -80,7 +80,7 @@
           Submit
         </button>
         <button
-          data-test="add-cancel-button"
+          data-test="prj-dlg-cancel-button"
           mat-flat-button
           color="secondary"
           (click)="onCancel()"
