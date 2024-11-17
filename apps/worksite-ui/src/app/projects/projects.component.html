@@ -13,5 +13,7 @@
     [columnDefs]="columnDefs"
     (gridReady)="onGridReady($event)"
   ></ag-grid-angular>
+  <div class="project-actions">
+    <button mat-flat-button (click)="onAddProject()">Add New</button>
+  </div>
 </div>
-<button mat-flat-button (click)="onAddProject()">Add New</button>

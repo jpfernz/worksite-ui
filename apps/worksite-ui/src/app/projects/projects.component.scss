@@ -1,0 +1,22 @@
+:host {
+  display: grid;
+  grid-template-rows: 2fr 1fr;
+  box-sizing: border-box;
+}
+
+.project-actions {
+  display: flex;
+}
+
+.projects-list {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.mat-mdc-button-base {
+  margin: 0.5rem 0.5rem 0.5rem 0;
+}
