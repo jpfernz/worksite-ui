@@ -1,53 +1,71 @@
-import { Component } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
-import { Project } from './models/project';
-import { of } from 'rxjs';
+import { Component, inject } from '@angular/core';
+import { AsyncPipe, DatePipe } from '@angular/common';
+import { IProject, ProjectStatus } from './models/iproject.interface';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { AddProjectComponent } from './components/add-project/add-project.component';
+
+import { ColDef, ValueGetterParams } from 'ag-grid-community';
+import { Store } from '@ngrx/store';
+import { ProjectsActions } from './state/projects.actions';
+import { Observable } from 'rxjs';
+import { selectProjects } from './state/projects.reducers';
+import { AgGridAngular } from 'ag-grid-angular';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [AsyncPipe],
+  imports: [MatButtonModule, AgGridAngular, AsyncPipe],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })
 export class ProjectsComponent {
-  dummyProjects: Project[] = [
+  private readonly dialog = inject(MatDialog);
+  private store = inject(Store);
+
+  projectsList$!: Observable<IProject[]>;
+
+  columnDefs: ColDef<IProject>[] = [
+    { field: 'title', headerName: 'Title' },
+    { field: 'description', headerName: 'Description' },
+    { field: 'projectManager', headerName: 'Project Manager' },
     {
-      id: 'prj1',
-      name: 'Project 1',
-      description: 'Description 1',
-      projectManager: 'Manager 1',
-      status: 'Active',
+      field: 'status',
+      headerName: 'Status',
+      valueGetter: (params: ValueGetterParams<IProject>) => {
+        if (!params.data) return '';
+        const status = params.data
+          .status as unknown as keyof typeof ProjectStatus;
+        return ProjectStatus[status] || '';
+      },
     },
     {
-      id: 'prj2',
-      name: 'Project 2',
-      description: 'Description 2',
-      projectManager: 'Manager 2',
-      status: 'Active',
+      field: 'startDate',
+      headerName: 'Start Date',
+      valueFormatter: (params) => {
+        if (!params.value) return '';
+        const datePipe = new DatePipe('en-GB');
+        return datePipe.transform(params.value, 'dd-MM-yyyy') || '';
+      },
     },
     {
-      id: 'prj3',
-      name: 'Project 3',
-      description: 'Description 3',
-      projectManager: 'Manager 3',
-      status: 'Active',
-    },
-    {
-      id: 'prj4',
-      name: 'Project 4',
-      description: 'Description 4',
-      projectManager: 'Manager 4',
-      status: 'Active',
-    },
-    {
-      id: 'prj5',
-      name: 'Project 5',
-      description: 'Description 5',
-      projectManager: 'Manager 5',
-      status: 'Active',
+      field: 'endDate',
+      headerName: 'End Date',
+      valueFormatter: (params) => {
+        if (!params.value) return '';
+        const datePipe = new DatePipe('en-GB');
+        return datePipe.transform(params.value, 'dd-MM-yyyy') || '';
+      },
     },
   ];
 
-  projects$ = of(this.dummyProjects);
+  onGridReady(params: any) {
+    this.store.dispatch(ProjectsActions.loadProjects());
+    this.projectsList$ = this.store.select(selectProjects);
+  }
+
+  onAddProject() {
+    this.dialog.open(AddProjectComponent);
+    console.log('Add Project');
+  }
 }

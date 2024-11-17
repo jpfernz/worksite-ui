@@ -13,5 +13,13 @@ export default defineConfig({
       ciWebServerCommand: 'nx run worksite-ui:serve-static',
     }),
     baseUrl: 'http://localhost:4200',
+    setupNodeEvents(on, config) {
+      on('before:browser:launch', (browser, launchOptions) => {
+        if (browser.name === 'chrome') {
+          launchOptions.args.push('--window-size=1920,1080');
+          return launchOptions;
+        }
+      });
+    },
   },
 });
