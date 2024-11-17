@@ -15,7 +15,7 @@ import { AgGridAngular } from 'ag-grid-angular';
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [MatButtonModule, AgGridAngular, AsyncPipe, DatePipe],
+  imports: [MatButtonModule, AgGridAngular, AsyncPipe],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })
