@@ -33,6 +33,20 @@ const projectsFeature = createFeature({
       ...state,
       isLoading: false,
       error,
+    })),
+    on(ProjectsActions.addProject, (state) => ({
+      ...state,
+      isLoading: true,
+    })),
+    on(ProjectsActions.addProjectSuccess, (state, { project }) => ({
+      ...state,
+      projects: [...state.projects, project],
+      isLoading: false,
+    })),
+    on(ProjectsActions.addProjectFailure, (state, { error }) => ({
+      ...state,
+      isLoading: false,
+      error,
     }))
   ),
 });

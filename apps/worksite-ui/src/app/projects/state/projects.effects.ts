@@ -20,3 +20,20 @@ export const loadProjects = createEffect(
   },
   { functional: true }
 );
+
+export const addProject = createEffect(
+  (action$ = inject(Actions), projectsService = inject(ProjectsService)) => {
+    return action$.pipe(
+      ofType(ProjectsActions.addProject),
+      exhaustMap(({ project }) =>
+        projectsService.addProject(project).pipe(
+          map((project) => ProjectsActions.addProjectSuccess({ project })),
+          catchError((error) =>
+            of(ProjectsActions.addProjectFailure({ error }))
+          )
+        )
+      )
+    );
+  },
+  { functional: true }
+);

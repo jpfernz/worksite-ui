@@ -1,4 +1,4 @@
-<mat-card class="project-dialog">
+<mat-card class="project-dialog" data-test="add-project-dialog">
   <mat-card-header>
     <mat-card-title>
       <h3>Add Project</h3>
@@ -7,10 +7,16 @@
   <mat-card-content>
     <form [formGroup]="projectForm">
       <mat-form-field>
-        <input matInput placeholder="Name" formControlName="name" />
+        <input
+          data-test="new-title"
+          matInput
+          placeholder="Title"
+          formControlName="title"
+        />
       </mat-form-field>
       <mat-form-field>
         <input
+          data-test="new-description"
           matInput
           placeholder="Description"
           formControlName="description"
@@ -18,6 +24,7 @@
       </mat-form-field>
       <mat-form-field>
         <input
+          data-test="new-project-manager"
           matInput
           placeholder="Project Manager"
           formControlName="projectManager"
@@ -26,6 +33,7 @@
       <mat-form-field>
         <mat-label>Start Date</mat-label>
         <input
+          data-test="new-start-date"
           matInput
           [matDatepickerFilter]="dateFilter"
           [matDatepicker]="startDatePicker"
@@ -41,6 +49,7 @@
       <mat-form-field>
         <mat-label>End Date</mat-label>
         <input
+          data-test="new-end-date"
           matInput
           [matDatepickerFilter]="dateFilter"
           [matDatepicker]="endDatePicker"
@@ -55,17 +64,27 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Status</mat-label>
-        <mat-select formControlName="status">
+        <mat-select formControlName="status" data-test="new-status">
           @for (status of projectStatuses; track status) {
           <mat-option [value]="status.key">{{ status.value }}</mat-option>
           }
         </mat-select>
       </mat-form-field>
       <div class="button-row">
-        <button mat-flat-button color="primary" (click)="onSubmit()">
+        <button
+          data-test="add-submit-button"
+          mat-flat-button
+          color="primary"
+          (click)="onSubmit()"
+        >
           Submit
         </button>
-        <button mat-flat-button color="secondary" (click)="onCancel()">
+        <button
+          data-test="add-cancel-button"
+          mat-flat-button
+          color="secondary"
+          (click)="onCancel()"
+        >
           Cancel
         </button>
       </div>

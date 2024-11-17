@@ -24,6 +24,8 @@ import {
   MAT_DATE_LOCALE,
   MatNativeDateModule,
 } from '@angular/material/core';
+import { Store } from '@ngrx/store';
+import { ProjectsActions } from '../../state/projects.actions';
 
 interface StatusOption {
   key: ProjectStatus;
@@ -66,6 +68,7 @@ export const MY_DATE_FORMATS = {
 })
 export class AddProjectComponent implements OnInit {
   public dialogRef = inject(MatDialogRef<AddProjectComponent>);
+  private store = inject(Store);
   projectForm!: FormGroup;
 
   projectStatuses: StatusOption[] = Object.entries(ProjectStatus).map(
@@ -84,11 +87,9 @@ export class AddProjectComponent implements OnInit {
   };
 
   private fb = inject(FormBuilder);
-  private dataService = inject(ProjectsService);
-
   ngOnInit() {
     this.projectForm = this.fb.group({
-      name: [''],
+      title: [''],
       description: [''],
       projectManager: [''],
       status: [''],
@@ -108,11 +109,16 @@ export class AddProjectComponent implements OnInit {
     // }
 
     const newProject = {
-      name: this.projectForm.value.name,
+      title: this.projectForm.value.title,
       description: this.projectForm.value.description,
       projectManager: this.projectForm.value.projectManager,
       status: this.projectForm.value.status,
+      startDate: this.projectForm.value.startDate,
+      endDate: this.projectForm.value.endDate,
     };
+
+    this.store.dispatch(ProjectsActions.addProject({ project: newProject }));
+
     this.dialogRef.close();
     // this.dataService.addProject(newProject);
   }

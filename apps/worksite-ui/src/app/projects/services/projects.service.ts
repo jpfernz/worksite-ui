@@ -18,10 +18,6 @@ export class ProjectsService {
   }
 
   addProject(project: IProject) {
-    return this.http.post<IProject>(this.projectsUrl, project).pipe(
-      map((response) => {
-        console.log(response);
-      })
-    );
+    return this.http.post<IProject>(this.projectsUrl, project);
   }
 }
