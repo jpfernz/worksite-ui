@@ -1,5 +1,16 @@
-<p>projects works!</p>
+<!-- <p>projects works!</p>
 @for(project of projects$ | async; track project.id) {
 <p>{{ project.title }}</p>
-}
+} -->
+
+<div class="projects-list">
+  <h3>Projects List</h3>
+  <ag-grid-angular
+    style="width: 80%; height: 520px"
+    class="ag-theme-quartz"
+    [rowData]="projectsList$ | async"
+    [columnDefs]="columnDefs"
+    (gridReady)="onGridReady($event)"
+  ></ag-grid-angular>
+</div>
 <button mat-flat-button (click)="onAddProject()">Add New</button>

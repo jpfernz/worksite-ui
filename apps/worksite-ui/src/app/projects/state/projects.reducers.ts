@@ -20,31 +20,20 @@ const projectsFeature = createFeature({
   name: 'projects',
   reducer: createReducer(
     initialProjectsState,
-    on(
-      ProjectsActions.loadProjects,
-      (state): ProjectsState => ({
-        ...state,
-        isLoading: true,
-        error: undefined,
-      })
-    ),
-    on(
-      ProjectsActions.loadProjectsSuccess,
-      (state, { projects }): ProjectsState => ({
-        ...state,
-        projects,
-        isLoading: false,
-        error: undefined,
-      })
-    ),
-    on(
-      ProjectsActions.loadProjectsFailure,
-      (state, { error }): ProjectsState => ({
-        ...state,
-        isLoading: false,
-        error,
-      })
-    )
+    on(ProjectsActions.loadProjects, (state) => ({
+      ...state,
+      isLoading: true,
+    })),
+    on(ProjectsActions.loadProjectsSuccess, (state, { projects }) => ({
+      ...state,
+      projects: projects,
+      isLoading: false,
+    })),
+    on(ProjectsActions.loadProjectsFailure, (state, { error }) => ({
+      ...state,
+      isLoading: false,
+      error,
+    }))
   ),
 });
 

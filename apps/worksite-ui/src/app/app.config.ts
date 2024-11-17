@@ -14,6 +14,7 @@ import {
   projectsFeatureKey,
   projectsReducer,
 } from './projects/state/projects.reducers';
+import * as ProjectsEffects from './projects/state/projects.effects';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
@@ -26,7 +27,7 @@ export const appConfig: ApplicationConfig = {
     provideNativeDateAdapter(),
     provideStore(),
     provideState(projectsFeatureKey, projectsReducer),
-    provideEffects(),
+    provideEffects([ProjectsEffects]),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: !isDevMode(),
