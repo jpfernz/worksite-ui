@@ -1,4 +1,3 @@
-import { get } from 'cypress/types/lodash';
 import { getProjectsGrid } from '../support/projects.po';
 
 // cypress/e2e/projects-grid.cy.ts
@@ -44,6 +43,8 @@ describe('Projects Grid', () => {
         cy.get('.ag-cell').eq(0).should('contain', 'Project 1');
         cy.get('.ag-cell').eq(2).should('contain', 'John Doe');
         cy.get('.ag-cell').eq(3).should('contain', 'In Progress');
+        cy.get('.ag-cell').eq(4).should('contain', '01-01-2024');
+        // cy.get('.ag-cell').eq(5).should('contain', '2024-06-30');
       });
 
     // Verify last row data

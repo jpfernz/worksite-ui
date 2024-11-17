@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { IProject, ProjectStatus } from './models/iproject.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,7 +15,7 @@ import { AgGridAngular } from 'ag-grid-angular';
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [MatButtonModule, AgGridAngular, AsyncPipe],
+  imports: [MatButtonModule, AgGridAngular, AsyncPipe, DatePipe],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss',
 })
@@ -39,8 +39,24 @@ export class ProjectsComponent {
         return ProjectStatus[status] || '';
       },
     },
-    { field: 'startDate', headerName: 'Start Date' },
-    { field: 'endDate', headerName: 'End Date' },
+    {
+      field: 'startDate',
+      headerName: 'Start Date',
+      valueFormatter: (params) => {
+        if (!params.value) return '';
+        const datePipe = new DatePipe('en-GB');
+        return datePipe.transform(params.value, 'dd-MM-yyyy') || '';
+      },
+    },
+    {
+      field: 'endDate',
+      headerName: 'End Date',
+      valueFormatter: (params) => {
+        if (!params.value) return '';
+        const datePipe = new DatePipe('en-GB');
+        return datePipe.transform(params.value, 'dd-MM-yyyy') || '';
+      },
+    },
   ];
 
   onGridReady(params: any) {
