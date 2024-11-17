@@ -10,9 +10,7 @@ export const loadProjects = createEffect(
       ofType(ProjectsActions.loadProjects),
       exhaustMap(() =>
         projectsService.getProjects().pipe(
-          map((projects) =>
-            ProjectsActions.loadProjectsSuccess({ projects: projects })
-          ),
+          map((projects) => ProjectsActions.loadProjectsSuccess({ projects })),
           catchError((error) =>
             of(ProjectsActions.loadProjectsFailure({ error }))
           )
