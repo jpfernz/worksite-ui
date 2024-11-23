@@ -27,6 +27,7 @@ import {
 import { Store } from '@ngrx/store';
 import { ProjectsActions } from '../../state/projects.actions';
 import { Dialog } from '@angular/cdk/dialog';
+import { selectCurrentProject } from '../../state/projects.reducers';
 
 interface StatusOption {
   key: ProjectStatus;
@@ -35,6 +36,7 @@ interface StatusOption {
 
 interface DialogData {
   title: string;
+  dialogType: string;
 }
 
 export const MY_DATE_FORMATS = {
@@ -76,6 +78,7 @@ export class ProjectDialogComponent implements OnInit {
   public data: DialogData = inject(MAT_DIALOG_DATA);
   private store = inject(Store);
   projectForm!: FormGroup;
+  currentProject$ = this.store.select(selectCurrentProject);
 
   projectStatuses: StatusOption[] = Object.entries(ProjectStatus).map(
     ([key, value]) => ({
@@ -93,15 +96,18 @@ export class ProjectDialogComponent implements OnInit {
   };
 
   private fb = inject(FormBuilder);
+
   ngOnInit() {
-    this.projectForm = this.fb.group({
-      title: [''],
-      description: [''],
-      projectManager: [''],
-      status: [''],
-      startDate: [''],
-      endDate: [''],
-    });
+    if (this.data.dialogType === 'add') {
+      this.projectForm = this.fb.group({
+        title: [''],
+        description: [''],
+        projectManager: [''],
+        status: [''],
+        startDate: [''],
+        endDate: [''],
+      });
+    }
   }
 
   onCancel() {

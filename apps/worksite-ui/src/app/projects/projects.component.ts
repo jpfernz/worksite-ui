@@ -90,14 +90,14 @@ export class ProjectsComponent {
 
   onAddProject() {
     this.dialog.open(ProjectDialogComponent, {
-      data: { title: 'Add Project' },
+      data: { title: 'Add Project', dialogType: 'add' },
     });
     console.log('Add Project');
   }
 
   onUpdateProject() {
     this.dialog.open(ProjectDialogComponent, {
-      data: { title: 'Update Project' },
+      data: { title: 'Update Project', dialogType: 'update' },
     });
     console.log('Update Project');
   }
