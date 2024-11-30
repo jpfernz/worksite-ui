@@ -27,7 +27,6 @@ export class ProjectsComponent {
 
   columnDefs: ColDef<IProject>[] = [
     { field: 'title', headerName: 'Title' },
-    { field: 'description', headerName: 'Description' },
     { field: 'projectManager', headerName: 'Project Manager' },
     {
       field: 'status',
