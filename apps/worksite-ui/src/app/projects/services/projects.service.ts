@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { IProject } from '../models/iproject.interface';
 import { map, Observable } from 'rxjs';
 
-const baseUrl = 'http://localhost:8080/v1/api';
+const baseUrl = 'http://localhost:8081/v1/api';
 
 @Injectable({
   providedIn: 'root',
