@@ -6,6 +6,7 @@
     class="ag-theme-quartz"
     [rowData]="projectsList$ | async"
     [columnDefs]="columnDefs"
+    [statusBar]="statusBar"
     (gridReady)="onGridReady($event)"
   ></ag-grid-angular>
   <div class="project-actions">

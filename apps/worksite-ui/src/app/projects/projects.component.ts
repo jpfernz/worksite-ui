@@ -5,12 +5,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { AddProjectComponent } from './components/add-project/add-project.component';
 
-import { ColDef, ValueGetterParams } from 'ag-grid-community';
+import {
+  ColDef,
+  ModuleRegistry,
+  StatusPanelDef,
+  ValueGetterParams,
+} from 'ag-grid-community';
 import { Store } from '@ngrx/store';
 import { ProjectsActions } from './state/projects.actions';
 import { Observable } from 'rxjs';
 import { selectProjects } from './state/projects.reducers';
 import { AgGridAngular } from 'ag-grid-angular';
+import { StatusButton1 } from '../shared/grid/status.button1.component';
+import { StatusBarModule } from 'ag-grid-enterprise';
+ModuleRegistry.registerModules([StatusBarModule]);
 
 @Component({
   selector: 'app-projects',
@@ -67,4 +75,14 @@ export class ProjectsComponent {
     this.dialog.open(AddProjectComponent);
     console.log('Add Project');
   }
+
+  public statusBar: {
+    statusPanels: StatusPanelDef[];
+  } = {
+    statusPanels: [
+      {
+        statusPanel: StatusButton1,
+      },
+    ],
+  };
 }
