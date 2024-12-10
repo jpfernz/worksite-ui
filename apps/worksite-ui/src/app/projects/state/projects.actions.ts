@@ -10,5 +10,6 @@ export const ProjectsActions = createActionGroup({
     'Add Project': props<{ project: IProject }>(),
     'Add Project Success': props<{ project: IProject }>(),
     'Add Project Failure': props<{ error: string }>(),
+    'Select Project': props<{ project: IProject }>(),
   },
 });

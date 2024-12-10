@@ -7,7 +7,9 @@
     [rowData]="projectsList$ | async"
     [columnDefs]="columnDefs"
     [statusBar]="statusBar"
+    [rowSelection]="rowSelection"
     (gridReady)="onGridReady($event)"
+    (selectionChanged)="onSelectedProject($event)"
   ></ag-grid-angular>
   <div class="project-actions">
     <button

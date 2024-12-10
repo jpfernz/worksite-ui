@@ -20,4 +20,8 @@ export class ProjectsService {
   addProject(project: IProject) {
     return this.http.post<IProject>(this.projectsUrl, project);
   }
+
+  getProjectStatus(projectId: string): Observable<string> {
+    return this.http.get<string>(`${baseUrl}/projects/${projectId}/status`);
+  }
 }

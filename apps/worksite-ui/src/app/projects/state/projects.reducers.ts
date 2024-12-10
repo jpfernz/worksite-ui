@@ -47,6 +47,10 @@ const projectsFeature = createFeature({
       ...state,
       isLoading: false,
       error,
+    })),
+    on(ProjectsActions.selectProject, (state, { project }) => ({
+      ...state,
+      currentProject: project,
     }))
   ),
 });
