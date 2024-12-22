@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { IProject } from '../models/iproject.interface';
-import { map, Observable } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 
 const baseUrl = 'http://localhost:8081/v1/api';
 
@@ -15,6 +15,18 @@ export class ProjectsService {
 
   getProjects(): Observable<IProject[]> {
     return this.http.get<IProject[]>(this.projectsUrl);
+  }
+
+  getProject(projectId: number): Observable<IProject> {
+    return this.http.get<IProject>(`${this.projectsUrl}/${projectId}`).pipe(
+      map((project) => {
+        return project;
+      }),
+      catchError((error) => {
+        console.log(error);
+        throw error;
+      })
+    );
   }
 
   addProject(project: IProject) {

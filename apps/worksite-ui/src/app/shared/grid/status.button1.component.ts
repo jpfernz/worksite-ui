@@ -59,6 +59,6 @@ export class ExportStatusButton implements IStatusPanelAngularComp {
       )
       .subscribe();
 
-    this.params.api.exportDataAsExcel();
+    // this.params.api.exportDataAsExcel();
   }
 }

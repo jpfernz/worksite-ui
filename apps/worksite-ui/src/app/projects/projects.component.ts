@@ -16,11 +16,12 @@ import {
 } from 'ag-grid-community';
 import { Store } from '@ngrx/store';
 import { ProjectsActions } from './state/projects.actions';
-import { Observable } from 'rxjs';
+import { map, Observable, switchMap, take, tap } from 'rxjs';
 import { selectProjects } from './state/projects.reducers';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ExportStatusButton } from '../shared/grid/status.button1.component';
 import { ExcelExportModule, StatusBarModule } from 'ag-grid-enterprise';
+import { ProjectsService } from './services/projects.service';
 ModuleRegistry.registerModules([StatusBarModule, ExcelExportModule]);
 
 @Component({
@@ -33,6 +34,7 @@ ModuleRegistry.registerModules([StatusBarModule, ExcelExportModule]);
 export class ProjectsComponent {
   private readonly dialog = inject(MatDialog);
   private store = inject(Store);
+  private dataService = inject(ProjectsService);
 
   private gridApi!: GridApi;
 
@@ -89,6 +91,52 @@ export class ProjectsComponent {
 
   handleStatusButtonClick() {
     console.log('Button clicked from host');
+    let projectStatus = '';
+    this.store
+      .select(selectProjects)
+      .pipe(
+        take(1),
+        switchMap((projects) => {
+          if (projects && projects.length > 0 && projects[0].id !== undefined) {
+            const projectId = parseInt(projects[0].id);
+            return this.dataService.getProject(projectId);
+          } else {
+            return [];
+          }
+        })
+      )
+      .subscribe((project) => {
+        projectStatus = project.status;
+        console.log(`projectStatus: ${projectStatus}`);
+      });
+    console.log(`projectStatus: ${projectStatus}`);
+  }
+
+  testAsyncHandler(): string {
+    let projectStatus = '';
+    this.store
+      .select(selectProjects)
+      .pipe(
+        take(1),
+        switchMap((projects) => {
+          if (projects && projects.length > 0 && projects[0].id !== undefined) {
+            const projectId = parseInt(projects[0].id);
+            return this.dataService.getProject(projectId);
+          } else {
+            return [];
+          }
+        })
+      )
+      .subscribe((project) => {
+        projectStatus = project.status;
+        // console.log(`projectStatus: ${projectStatus}`);
+      });
+    return projectStatus;
+  }
+
+  onTestButtonClick() {
+    console.log(this.testAsyncHandler());
+    // console.log(`projectStatus: ${projectStatus}`);
   }
 
   onAddProject() {
