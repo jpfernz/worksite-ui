@@ -16,7 +16,15 @@ import {
 } from 'ag-grid-community';
 import { Store } from '@ngrx/store';
 import { ProjectsActions } from './state/projects.actions';
-import { Observable, switchMap, take } from 'rxjs';
+import {
+  firstValueFrom,
+  map,
+  Observable,
+  of,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { selectProjects } from './state/projects.reducers';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ExportStatusButton } from '../shared/grid/status.button1.component';
@@ -83,30 +91,41 @@ export class ProjectsComponent {
     this.projectsList$ = this.store.select(selectProjects);
   }
 
-  testAsyncHandler(): string {
-    let projectStatus = '';
-    this.store
-      .select(selectProjects)
-      .pipe(
-        take(1),
-        switchMap((projects) => {
-          if (projects && projects.length > 0 && projects[0].id !== undefined) {
-            const projectId = parseInt(projects[0].id);
-            return this.dataService.getProject(projectId);
-          } else {
-            return [];
-          }
-        })
-      )
-      .subscribe((project) => {
-        projectStatus = project.status;
-        console.log(`projectStatus: ${projectStatus}`);
-      });
-    return projectStatus;
+  testAsyncHandler(): Observable<boolean> {
+    return of(true);
+    // return this.store.select(selectProjects).pipe(
+    //   take(1),
+    //   switchMap((projects) => {
+    //     if (projects && projects.length > 0 && projects[0].id !== undefined) {
+    //       const projectId = parseInt(projects[0].id);
+    //       return this.dataService.getProject(projectId).pipe(
+    //         tap((project) => console.log(`project: ${project.status}`)),
+    //         map(
+    //           (project) =>
+    //             (project.status as unknown as string) ===
+    //             ProjectStatus.NOT_STARTED
+    //         )
+    //       );
+    //     } else {
+    //       return of(false);
+    //     }
+    //   })
+    // );
   }
 
-  onTestButtonClick() {
-    console.log(`from testButtonClick: ${this.testAsyncHandler()}`);
+  async midAsyncHandler(): Promise<boolean> {
+    // console.log('do something');
+    // store the value of testAsyncHandler to a variable
+    const projectStatus = await firstValueFrom(this.testAsyncHandler());
+    // const projectStatus = this.testAsyncHandler()
+    return projectStatus;
+    console.log(`projectStatus: ${projectStatus}`);
+  }
+
+  async onTestButtonClick() {
+    const asyncValue = await this.midAsyncHandler();
+    console.log(`from testButtonClick: ${asyncValue}`);
+    // console.log(`from testButtonClick: ${this.testAsyncHandler()}`);
     // console.log(`projectStatus: ${projectStatus}`);
   }
 
@@ -131,7 +150,8 @@ export class ProjectsComponent {
         align: 'right',
         statusPanelParams: {
           statusBarSettings: {
-            exportFlag: true,
+            // exportFlag: true,
+            // exportFlagCallback: () => this.midAsyncHandler(),
             anotherValue: false,
           },
         },

@@ -41,11 +41,44 @@ export class ExportStatusButton implements IStatusPanelAngularComp {
     this.statusBarSettings = params.statusBarSettings;
   }
 
-  onExportClick(): void {
-    console.log(this.statusBarSettings);
-    console.log(this.statusBarSettings.exportFlag);
-    console.log(this.statusBarSettings.anotherValue);
+  exportGridData(): void {
+    console.log('Exporting grid data');
+  }
 
-    // this.params.api.exportDataAsExcel();
+  onExportClick(): void {
+    // Check if callback function is defined to catch possible errors
+    if (typeof this.statusBarSettings?.exportFlagCallback !== 'function') {
+      console.log('exportFlagCallback function is not defined');
+    }
+
+    // Check if callback function is defined to catch possible.
+    if (typeof this.statusBarSettings?.exportFlagCallback === 'function') {
+      console.log('exportFlagCallback function is defined');
+
+      // If exportCallBack is defined, process the data and then exit out of the function
+      const exportFlagCallback: Promise<any> =
+        this.statusBarSettings.exportFlagCallback();
+      exportFlagCallback.then((result) => {
+        console.log('exportFlagCallback result: ', result);
+        if (result) {
+          this.exportGridData();
+        }
+      });
+      return;
+    }
+
+    // Check if exportFlag is defined
+    if (this.statusBarSettings.exportFlag !== undefined) {
+      if (this.statusBarSettings.exportFlag) {
+        console.log('exportFlag is true');
+        this.exportGridData();
+      } else {
+        console.log('exportFlag is defined and not true');
+      }
+      return;
+    }
+
+    console.log('No export flag defined');
+    this.exportGridData();
   }
 }
