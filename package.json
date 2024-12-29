@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nx run worksite-ui:serve --configuration=development",
+    "test:jest": "nx run worksite-ui:test",
     "e2e:open": "nx run worksite-ui-e2e:open-cypress"
   },
   "private": true,
