@@ -151,7 +151,8 @@ export class ProjectsComponent {
         statusPanelParams: {
           statusBarSettings: {
             // exportFlag: true,
-            // exportFlagCallback: () => this.midAsyncHandler(),
+            // exportFlagCallback: async () => await this.midAsyncHandler(), // this works
+            exportFlagCallback: () => this.midAsyncHandler(), // this works too
             anotherValue: false,
           },
         },
