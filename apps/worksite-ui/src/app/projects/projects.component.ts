@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { IProject, ProjectStatus } from './models/iproject.interface';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,9 +23,14 @@ import {
   of,
   switchMap,
   take,
+  takeUntil,
   tap,
 } from 'rxjs';
-import { selectProjects } from './state/projects.reducers';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  selectCurrentProject,
+  selectProjects,
+} from './state/projects.reducers';
 import { AgGridAngular } from 'ag-grid-angular';
 import { ExportStatusButton } from '../shared/grid/status.button1.component';
 import { ExcelExportModule, StatusBarModule } from 'ag-grid-enterprise';
@@ -43,6 +48,7 @@ export class ProjectsComponent {
   private readonly dialog = inject(MatDialog);
   private store = inject(Store);
   private dataService = inject(ProjectsService);
+  private destroyRef = inject(DestroyRef);
 
   private gridApi!: GridApi;
 
@@ -132,6 +138,22 @@ export class ProjectsComponent {
   onAddProject() {
     this.dialog.open(AddProjectComponent);
     console.log('Add Project');
+  }
+
+  onDeleteProject() {
+    this.store
+      .select(selectCurrentProject)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        map((project) => project)
+      )
+      .subscribe((project) => {
+        if (project?.id) {
+          this.store.dispatch(
+            ProjectsActions.deleteProject({ projectId: parseInt(project.id) })
+          );
+        }
+      });
   }
 
   onSelectedProject(event: SelectionChangedEvent) {

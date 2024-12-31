@@ -51,6 +51,21 @@ const projectsFeature = createFeature({
     on(ProjectsActions.selectProject, (state, { project }) => ({
       ...state,
       currentProject: project,
+    })),
+    on(ProjectsActions.deleteProject, (state) => ({
+      ...state,
+      isLoading: true,
+    })),
+    on(ProjectsActions.deleteProjectSuccess, (state, { successMessage }) => ({
+      ...state,
+      projects: state.projects.filter((p) => p.id !== state.currentProject?.id),
+      successMessage,
+      isLoading: false,
+    })),
+    on(ProjectsActions.deleteProjectFailure, (state, { error }) => ({
+      ...state,
+      isLoading: false,
+      error,
     }))
   ),
 });

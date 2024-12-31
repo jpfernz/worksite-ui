@@ -36,4 +36,8 @@ export class ProjectsService {
   getProjectStatus(projectId: string): Observable<string> {
     return this.http.get<string>(`${baseUrl}/projects/${projectId}/status`);
   }
+
+  deleteProject(projectId: number) {
+    return this.http.delete(`${this.projectsUrl}/${projectId}`);
+  }
 }

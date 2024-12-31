@@ -20,11 +20,18 @@
       Add New
     </button>
     <button
+      data-test="delete-project-button"
+      mat-flat-button
+      (click)="onDeleteProject()"
+    >
+      Delete
+    </button>
+    <!-- <button
       data-test="test-button"
       mat-flat-button
       (click)="onTestButtonClick()"
     >
       Test Button
-    </button>
+    </button> -->
   </div>
 </div>
