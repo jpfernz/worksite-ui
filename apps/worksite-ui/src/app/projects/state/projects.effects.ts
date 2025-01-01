@@ -1,8 +1,9 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProjectsService } from '../services/projects.service';
 import { inject } from '@angular/core';
-import { map, catchError, of, exhaustMap, concatMap } from 'rxjs';
+import { map, catchError, of, exhaustMap, concatMap, tap } from 'rxjs';
 import { ProjectsActions } from './projects.actions';
+import { NotificationService } from '../../shared/services/notification.service';
 
 export const loadProjects = createEffect(
   (action$ = inject(Actions), projectsService = inject(ProjectsService)) => {
@@ -22,15 +23,23 @@ export const loadProjects = createEffect(
 );
 
 export const addProject = createEffect(
-  (action$ = inject(Actions), projectsService = inject(ProjectsService)) => {
+  (
+    action$ = inject(Actions),
+    projectsService = inject(ProjectsService),
+    notificationService = inject(NotificationService)
+  ) => {
     return action$.pipe(
       ofType(ProjectsActions.addProject),
       exhaustMap(({ project }) =>
         projectsService.addProject(project).pipe(
-          map((project) => ProjectsActions.addProjectSuccess({ project })),
-          catchError((error) =>
-            of(ProjectsActions.addProjectFailure({ error }))
-          )
+          map((project) => {
+            notificationService.showSuccess('Project added successfully');
+            return ProjectsActions.addProjectSuccess({ project });
+          }),
+          catchError((error) => {
+            notificationService.showError('Failed to add project');
+            return of(ProjectsActions.addProjectFailure({ error }));
+          })
         )
       )
     );
@@ -39,20 +48,26 @@ export const addProject = createEffect(
 );
 
 export const deleteProject = createEffect(
-  (action$ = inject(Actions), projectsService = inject(ProjectsService)) => {
+  (
+    action$ = inject(Actions),
+    projectsService = inject(ProjectsService),
+    notificationService = inject(NotificationService)
+  ) => {
     return action$.pipe(
       ofType(ProjectsActions.deleteProject),
       concatMap(({ projectId }) =>
         projectsService.deleteProject(projectId).pipe(
-          map(() =>
-            ProjectsActions.deleteProjectSuccess({
+          map(() => {
+            notificationService.showSuccess('Project deleted successfully');
+            return ProjectsActions.deleteProjectSuccess({
               projectId,
               successMessage: 'Project deleted successfully',
-            })
-          ),
-          catchError((error) =>
-            of(ProjectsActions.deleteProjectFailure({ error }))
-          )
+            });
+          }),
+          catchError((error) => {
+            notificationService.showError('Failed to delete project');
+            return of(ProjectsActions.deleteProjectFailure({ error }));
+          })
         )
       )
     );

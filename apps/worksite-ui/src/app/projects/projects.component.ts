@@ -137,7 +137,6 @@ export class ProjectsComponent {
 
   onAddProject() {
     this.dialog.open(AddProjectComponent);
-    console.log('Add Project');
   }
 
   onDeleteProject() {
