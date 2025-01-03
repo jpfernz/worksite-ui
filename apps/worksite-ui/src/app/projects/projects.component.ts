@@ -92,34 +92,38 @@ export class ProjectsComponent {
   }
 
   testAsyncHandler(): Observable<boolean> {
-    return of(true);
-    // return this.store.select(selectProjects).pipe(
-    //   take(1),
-    //   switchMap((projects) => {
-    //     if (projects && projects.length > 0 && projects[0].id !== undefined) {
-    //       const projectId = parseInt(projects[0].id);
-    //       return this.dataService.getProject(projectId).pipe(
-    //         tap((project) => console.log(`project: ${project.status}`)),
-    //         map(
-    //           (project) =>
-    //             (project.status as unknown as string) ===
-    //             ProjectStatus.NOT_STARTED
-    //         )
-    //       );
-    //     } else {
-    //       return of(false);
-    //     }
-    //   })
-    // );
+    // return of(true);
+    return this.store.select(selectProjects).pipe(
+      take(1),
+      switchMap((projects) => {
+        if (projects && projects.length > 0 && projects[0].id !== undefined) {
+          const projectId = parseInt(projects[0].id);
+          return this.dataService.getProject(projectId).pipe(
+            // tap((project) => console.log(`project: ${project.status}`)),
+            map(
+              (project) =>
+                (project.status as unknown as string) === 'NOT_STARTED'
+            )
+          );
+        } else {
+          return of(false);
+        }
+      })
+    );
   }
 
   async midAsyncHandler(): Promise<boolean> {
     // console.log('do something');
     // store the value of testAsyncHandler to a variable
     const projectStatus = await firstValueFrom(this.testAsyncHandler());
+    if (projectStatus) {
+      console.log('projectStatus is true');
+    } else {
+      console.log('projectStatus is false');
+    }
+    console.log(`projectStatus: ${projectStatus}`);
     // const projectStatus = this.testAsyncHandler()
     return projectStatus;
-    console.log(`projectStatus: ${projectStatus}`);
   }
 
   async onTestButtonClick() {
