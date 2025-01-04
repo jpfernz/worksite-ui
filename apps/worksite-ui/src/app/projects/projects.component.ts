@@ -91,6 +91,24 @@ export class ProjectsComponent {
     this.projectsList$ = this.store.select(selectProjects);
   }
 
+  async onTestButtonClick() {
+    const asyncValue = await this.midAsyncHandler();
+    console.log(`from testButtonClick: ${asyncValue}`);
+    // console.log(`from testButtonClick: ${this.testAsyncHandler()}`);
+    // console.log(`projectStatus: ${projectStatus}`);
+  }
+
+  onAddProject() {
+    this.dialog.open(AddProjectComponent);
+    console.log('Add Project');
+  }
+
+  onSelectedProject(event: SelectionChangedEvent) {
+    this.store.dispatch(
+      ProjectsActions.selectProject({ project: event.api.getSelectedRows()[0] })
+    );
+  }
+
   testAsyncHandler(): Observable<boolean> {
     // return of(true);
     return this.store.select(selectProjects).pipe(
@@ -115,7 +133,7 @@ export class ProjectsComponent {
   async midAsyncHandler(): Promise<boolean> {
     // console.log('do something');
     // store the value of testAsyncHandler to a variable
-    const projectStatus = await firstValueFrom(this.testAsyncHandler());
+    const projectStatus = (await this.testAsyncHandler().toPromise()) || false;
     if (projectStatus) {
       console.log('projectStatus is true');
     } else {
@@ -124,24 +142,6 @@ export class ProjectsComponent {
     console.log(`projectStatus: ${projectStatus}`);
     // const projectStatus = this.testAsyncHandler()
     return projectStatus;
-  }
-
-  async onTestButtonClick() {
-    const asyncValue = await this.midAsyncHandler();
-    console.log(`from testButtonClick: ${asyncValue}`);
-    // console.log(`from testButtonClick: ${this.testAsyncHandler()}`);
-    // console.log(`projectStatus: ${projectStatus}`);
-  }
-
-  onAddProject() {
-    this.dialog.open(AddProjectComponent);
-    console.log('Add Project');
-  }
-
-  onSelectedProject(event: SelectionChangedEvent) {
-    this.store.dispatch(
-      ProjectsActions.selectProject({ project: event.api.getSelectedRows()[0] })
-    );
   }
 
   public statusBar: {

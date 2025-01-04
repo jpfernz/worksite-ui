@@ -58,6 +58,8 @@ export class ExportStatusButton implements IStatusPanelAngularComp {
       // If exportCallBack is defined, process the data and then exit out of the function
       const exportFlagCallback: Promise<any> =
         this.statusBarSettings.exportFlagCallback();
+      console.log('exportFlagCallback: ', exportFlagCallback);
+
       exportFlagCallback.then((result) => {
         console.log('exportFlagCallback result: ', result);
         if (result) {
