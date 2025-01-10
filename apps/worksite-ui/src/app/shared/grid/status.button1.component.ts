@@ -7,6 +7,7 @@ import { selectCurrentProject } from '../../projects/state/projects.reducers';
 import { map, of, switchMap, take, tap } from 'rxjs';
 import { IProject } from '../../projects/models/iproject.interface';
 import { ProjectsService } from '../../projects/services/projects.service';
+import { StatusBarSettings } from './status-bar-fields';
 
 @Component({
   selector: 'app-status-button1',
@@ -32,7 +33,7 @@ export class ExportStatusButton implements IStatusPanelAngularComp {
   private params!: IStatusPanelParams;
   private store = inject(Store);
   private projectService = inject(ProjectsService);
-  private statusBarSettings: any;
+  private statusBarSettings: StatusBarSettings | undefined;
 
   @Output() buttonClicked = new EventEmitter<void>();
 
@@ -41,44 +42,37 @@ export class ExportStatusButton implements IStatusPanelAngularComp {
     this.statusBarSettings = params.statusBarSettings;
   }
 
-  exportGridData(): void {
+  exportGridData(exportParams: any): void {
     console.log('Exporting grid data');
   }
 
   onExportClick(): void {
-    // Check if callback function is defined to catch possible errors
-    if (typeof this.statusBarSettings?.exportFlagCallback !== 'function') {
-      console.log('exportFlagCallback function is not defined');
+    if (!this.statusBarSettings?.exportSettings) {
+      console.log('statusBarSettings or exportSettings is not defined');
+      return;
+    }
+
+    const exportParams: any = this.statusBarSettings.exportSettings();
+    if (!exportParams?.exportFlagCallback) {
+      console.log('exportFlagCallback is not defined');
+      this.exportGridData(exportParams);
+      // return;
     }
 
     // Check if callback function is defined to catch possible.
-    if (typeof this.statusBarSettings?.exportFlagCallback === 'function') {
+    if (typeof exportParams.exportFlagCallback === 'function') {
       console.log('exportFlagCallback function is defined');
 
       // If exportCallBack is defined, process the data and then exit out of the function
       const exportFlagCallback: Promise<any> =
-        this.statusBarSettings.exportFlagCallback();
+        exportParams.exportFlagCallback();
       exportFlagCallback.then((result) => {
         console.log('exportFlagCallback result: ', result);
         if (result) {
-          this.exportGridData();
+          this.exportGridData(exportParams);
         }
       });
       return;
     }
-
-    // Check if exportFlag is defined
-    if (this.statusBarSettings.exportFlag !== undefined) {
-      if (this.statusBarSettings.exportFlag) {
-        console.log('exportFlag is true');
-        this.exportGridData();
-      } else {
-        console.log('exportFlag is defined and not true');
-      }
-      return;
-    }
-
-    console.log('No export flag defined');
-    this.exportGridData();
   }
 }

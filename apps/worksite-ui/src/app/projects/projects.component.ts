@@ -144,6 +144,18 @@ export class ProjectsComponent {
     );
   }
 
+  private settings = {
+    exportSettings: () => {
+      return {
+        fileName: 'ProjectsExport',
+        columnGroups: true,
+        columnSeparator: ',',
+        exportFlagCallback: () => this.midAsyncHandler(),
+        anotherValue: false,
+      };
+    },
+  };
+
   public statusBar: {
     statusPanels: StatusPanelDef[];
   } = {
@@ -153,12 +165,7 @@ export class ProjectsComponent {
         key: 'exportStatusButton',
         align: 'right',
         statusPanelParams: {
-          statusBarSettings: {
-            // exportFlag: true,
-            // exportFlagCallback: async () => await this.midAsyncHandler(), // this works
-            exportFlagCallback: () => this.midAsyncHandler(), // this works too
-            anotherValue: false,
-          },
+          statusBarSettings: this.settings,
         },
       },
     ],
