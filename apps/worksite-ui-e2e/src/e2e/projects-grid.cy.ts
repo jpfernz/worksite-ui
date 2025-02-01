@@ -26,17 +26,18 @@ describe('Projects Grid', () => {
       'Start Date',
     ];
 
-    // cy.get('.ag-header-cell-text').each(($header, index) => {
-    //   cy.wrap($header).should('have.text', expectedHeaders[index]);
-    // });
-    cy.get('[col-id="title"]').should('contain.text', 'Title');
+    cy.get('.ag-header-cell[col-id="title"] .ag-header-cell-text').each(
+      ($header, index) => {
+        cy.wrap($header).should('have.text', expectedHeaders[index]);
+      }
+    );
   });
 
-  it.only('should sort projects by title', () => {
+  it('should sort projects by title', () => {
     // Click on title column header
     cy.get('.ag-header-cell').contains('Title').click();
 
-    // cy.get('.ag-row', { timeout: 10000 }).should('exist');
+    cy.get('.ag-row', { timeout: 10000 }).should('exist');
 
     // Verify first row data
     cy.get('.ag-row')
@@ -61,7 +62,7 @@ describe('Projects Grid', () => {
     cy.get('.ag-row')
       .first()
       .within(() => {
-        cy.get('.ag-cell').eq(0).should('contain', 'Project 1');
+        cy.get('.ag-cell').eq(1).should('contain', 'Project 1');
         cy.get('.ag-cell').eq(2).should('contain', 'John Doe');
         cy.get('.ag-cell').eq(3).should('contain', 'In Progress');
         cy.get('.ag-cell').eq(4).should('contain', '01-01-2024');
@@ -72,7 +73,7 @@ describe('Projects Grid', () => {
     cy.get('.ag-row')
       .last()
       .within(() => {
-        cy.get('.ag-cell').eq(0).should('contain', 'Project 3');
+        cy.get('.ag-cell').eq(1).should('contain', 'Project 3');
         cy.get('.ag-cell').eq(2).should('contain', 'Jane Smith');
         cy.get('.ag-cell').eq(3).should('contain', 'Completed');
       });
@@ -81,15 +82,15 @@ describe('Projects Grid', () => {
     cy.get('.ag-row')
       .eq(1)
       .within(() => {
-        cy.get('.ag-cell').eq(0).should('contain', 'Project 2');
+        cy.get('.ag-cell').eq(1).should('contain', 'Project 2');
         cy.get('.ag-cell').eq(2).should('contain', 'Bob Wilson');
         cy.get('.ag-cell').eq(3).should('contain.text', 'Completed');
       });
   });
 
-  it.skip('should show loading state while fetching data', () => {
+  it.only('should show loading state while fetching data', () => {
     cy.intercept('GET', '/api/projects', {
-      delay: 1000,
+      delay: 3000,
       body: [],
     }).as('slowProjects');
 
