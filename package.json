@@ -5,7 +5,8 @@
   "scripts": {
     "start": "nx run worksite-ui:serve --configuration=development",
     "test:jest": "nx run worksite-ui:test",
-    "e2e:open": "nx run worksite-ui-e2e:open-cypress"
+    "e2e:open": "nx run worksite-ui-e2e:open-cypress",
+    "e2e:e2e": "nx run worksite-ui-e2e:e2e"
   },
   "private": true,
   "dependencies": {
