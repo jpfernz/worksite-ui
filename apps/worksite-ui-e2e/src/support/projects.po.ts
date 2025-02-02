@@ -1,5 +1,7 @@
 export const getProjectsGrid = () => cy.get('[data-test=projects-grid]');
 export const addProjectButton = () => cy.get('[data-test=add-project-button]');
+export const deleteProjectButton = () =>
+  cy.get('[data-test=delete-project-button]');
 export const addProjectDialog = () => cy.get('[data-test=add-project-dialog]');
 export const addProjectTitle = () => cy.get('[data-test=new-title]');
 export const addProjectDescription = () =>

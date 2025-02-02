@@ -103,11 +103,6 @@ export class AddProjectComponent implements OnInit {
   }
 
   onSubmit() {
-    // if (!this.projectForm?.valid) {
-    console.log(this.projectForm.value);
-    //   return;
-    // }
-
     const newProject = {
       title: this.projectForm.value.title,
       description: this.projectForm.value.description,
