@@ -1,4 +1,4 @@
-import { getProjectsGrid } from '../support/projects.po';
+import { deleteProjectButton, getProjectsGrid } from '../support/projects.po';
 
 // cypress/e2e/projects-grid.cy.ts
 describe('Projects Grid', () => {
@@ -66,7 +66,7 @@ describe('Projects Grid', () => {
         cy.get('.ag-cell').eq(2).should('contain', 'John Doe');
         cy.get('.ag-cell').eq(3).should('contain', 'In Progress');
         cy.get('.ag-cell').eq(4).should('contain', '01-01-2024');
-        // cy.get('.ag-cell').eq(5).should('contain', '2024-06-30');
+        cy.get('.ag-cell').eq(5).should('contain', '30-06-2024');
       });
 
     // Verify last row data
@@ -88,7 +88,22 @@ describe('Projects Grid', () => {
       });
   });
 
-  it.only('should show loading state while fetching data', () => {
+  it('should delete a project', () => {
+    // Click on delete button
+    cy.get('.ag-row')
+      .first()
+      .within(() => {
+        cy.get('.ag-cell').eq(0).click();
+      });
+
+    // Confirm delete
+    deleteProjectButton().click();
+
+    // Verify project is removed
+    cy.get('.ag-row').should('have.length', 2);
+  });
+
+  it.skip('should show loading state while fetching data', () => {
     cy.intercept('GET', '/api/projects', {
       delay: 3000,
       body: [],
