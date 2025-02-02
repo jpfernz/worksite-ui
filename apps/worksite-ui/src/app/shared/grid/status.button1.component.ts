@@ -3,10 +3,10 @@ import { IStatusPanelAngularComp } from 'ag-grid-angular';
 import { IStatusPanelParams } from 'ag-grid-community';
 import { ButtonClickDirective } from '../directives/button.click.directive';
 import { Store } from '@ngrx/store';
-import { selectCurrentProject } from '../../projects/state/projects.reducers';
+import { selectCurrentProject } from '../../projects/data/projects.reducers';
 import { map, of, switchMap, take, tap } from 'rxjs';
 import { IProject } from '../../projects/models/iproject.interface';
-import { ProjectsService } from '../../projects/services/projects.service';
+import { ProjectsService } from '../../projects/data/projects.service';
 
 @Component({
   selector: 'app-status-button1',

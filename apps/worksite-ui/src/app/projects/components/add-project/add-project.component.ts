@@ -10,7 +10,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { ProjectsService } from '../../services/projects.service';
+import { ProjectsService } from '../../data/projects.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -25,7 +25,7 @@ import {
   MatNativeDateModule,
 } from '@angular/material/core';
 import { Store } from '@ngrx/store';
-import { ProjectsActions } from '../../state/projects.actions';
+import { ProjectsActions } from '../../data/projects.actions';
 
 interface StatusOption {
   key: ProjectStatus;

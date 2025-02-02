@@ -13,8 +13,8 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import {
   projectsFeatureKey,
   projectsReducer,
-} from './projects/state/projects.reducers';
-import * as ProjectsEffects from './projects/state/projects.effects';
+} from './projects/data/projects.reducers';
+import * as ProjectsEffects from './projects/data/projects.effects';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { authInterceptor } from './shared/services/auth.service';
 

@@ -1,5 +1,5 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { ProjectsService } from '../services/projects.service';
+import { ProjectsService } from './projects.service';
 import { inject } from '@angular/core';
 import { map, catchError, of, exhaustMap, concatMap, tap } from 'rxjs';
 import { ProjectsActions } from './projects.actions';
