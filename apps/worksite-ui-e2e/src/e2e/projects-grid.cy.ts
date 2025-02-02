@@ -88,6 +88,11 @@ describe('Projects Grid', () => {
       });
   });
 
+  it.only('should disable Delete button if no project is selected', () => {
+    // Verify delete button is disabled
+    deleteProjectButton().should('be.disabled');
+  });
+
   it('should delete a project', () => {
     // Click on delete button
     cy.get('.ag-row')

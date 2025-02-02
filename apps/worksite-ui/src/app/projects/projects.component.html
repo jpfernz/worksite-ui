@@ -9,6 +9,7 @@
     [statusBar]="statusBar"
     [rowSelection]="rowSelection"
     (gridReady)="onGridReady($event)"
+    (rowSelected)="onRowSelected($event)"
     (selectionChanged)="onSelectedProject($event)"
   ></ag-grid-angular>
   <div class="project-actions">
@@ -23,6 +24,7 @@
       data-test="delete-project-button"
       mat-flat-button
       (click)="onDeleteProject()"
+      [disabled]="!isProjectSelected"
     >
       Delete
     </button>

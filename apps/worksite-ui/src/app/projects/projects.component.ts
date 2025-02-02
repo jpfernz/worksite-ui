@@ -9,6 +9,7 @@ import {
   ColDef,
   GridApi,
   ModuleRegistry,
+  RowSelectedEvent,
   RowSelectionOptions,
   SelectionChangedEvent,
   StatusPanelDef,
@@ -46,6 +47,10 @@ export class ProjectsComponent {
   private store = inject(Store);
   private dataService = inject(ProjectsService);
   private destroyRef = inject(DestroyRef);
+  public isProjectSelected = false;
+  public selectedItemsCount = 0;
+  private selectedProject: IProject | null = null;
+  public targetProject$ = this.store.select(selectCurrentProject);
 
   private gridApi!: GridApi;
 
@@ -88,6 +93,13 @@ export class ProjectsComponent {
     mode: 'singleRow',
   };
 
+  onRowSelected(event: RowSelectedEvent) {
+    // const isSelected = event.node.isSelected();
+    // console.log('Row selected: ', isSelected);
+    // this.isProjectSelected = isSelected ?? false;
+    // console.log(event.data);
+  }
+
   onGridReady(params: any) {
     this.gridApi = params.api;
     this.store.dispatch(ProjectsActions.loadProjects());
@@ -112,26 +124,47 @@ export class ProjectsComponent {
   }
 
   onDeleteProject() {
-    this.store
-      .select(selectCurrentProject)
-      .pipe(
-        map((project) => project),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe((project) => {
-        if (project?.id) {
-          console.log('Deleting project', project);
-          // this.store.dispatch(
-          //   ProjectsActions.deleteProject({ projectId: parseInt(project.id) })
-          // );
-        }
-      });
+    console.log('Deleting project');
+    if (!this.selectedProject?.id) {
+      console.log('No project selected');
+      return;
+    }
+    this.store.dispatch(
+      ProjectsActions.deleteProject({
+        projectId: parseInt(this.selectedProject?.id),
+      })
+    );
+    // this.store
+    //   .select(selectCurrentProject)
+    //   .pipe(takeUntilDestroyed(this.destroyRef))
+    //   .subscribe((project) => {
+    //     if (project?.id) {
+    //       console.log('Deleting project', project);
+    //       this.store.dispatch(
+    //         ProjectsActions.deleteProject({ projectId: parseInt(project.id) })
+    //       );
+    //     }
+    //   });
   }
 
   onSelectedProject(event: SelectionChangedEvent) {
-    this.store.dispatch(
-      ProjectsActions.selectProject({ project: event.api.getSelectedRows()[0] })
-    );
+    // console.log(event);
+    // this.store.dispatch(
+    //   ProjectsActions.selectProject({ project: event.api.getSelectedRows()[0] })
+    // );
+    const rowCount = event.api.getSelectedRows().length;
+    if (rowCount > 0) {
+      this.selectedProject = event.api.getSelectedRows()[0];
+      this.isProjectSelected = true;
+      this.store.dispatch(
+        ProjectsActions.selectProject({
+          project: event.api.getSelectedRows()[0],
+        })
+      );
+    } else {
+      this.isProjectSelected = false;
+    }
+    console.log('Row count: ', rowCount);
   }
 
   public statusBar: {
